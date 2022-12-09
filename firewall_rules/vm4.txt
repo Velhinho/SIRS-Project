@@ -1,0 +1,10 @@
+# ----------------
+# In the bash shell
+sudo ufw enable
+
+# Accepts ssh requests
+sudo ufw allow from any to 192.168.2.0/24 port 22
+
+# Is able to open ssh connections to both external network and DMZ
+sudo ufw allow from 192.168.2.0/24 to 192.168.1.0/24 port 22
+sudo ufw allow from 192.168.2.0/24 to 192.168.2.0/24 port 22

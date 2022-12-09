@@ -1,0 +1,22 @@
+# ----------------
+# In the bash shell
+sudo ufw enable
+
+# Requests from the internal network 192.168.2.0/24 are only accepted if destined to the ssh port.
+sudo ufw allow from 192.168.2.0/24 to any port 22
+
+# ----------------
+# In the /etc/ufw/before.rules, in the begging of the file
+# Right before *filter
+
+# nat Table rules
+*nat
+:PREROUTING ACCEPT [0:0]
+
+# All http connections (port 80) are redirected to VM3
+-A PREROUTING -i enp0s8 -d 192.168.0.10 -p tcp --dport 80 -j DNAT --to-destination 192.168.1.1:80
+
+# All ssh connections from the external network are redirected to VM4
+-A PREROUTING -i enp0s9 -d 192.168.0.10 -p tcp --dport 22 -j DNAT --to-destination 192.168.2.4:22
+
+COMMIT

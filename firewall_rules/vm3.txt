@@ -1,0 +1,13 @@
+# ----------------
+# In the bash shell
+sudo ufw enable
+
+# Accepts http connections from both the internal and external networks
+sudo ufw allow from any to 192.168.1.0/24 port 80
+
+# Accepts ssh connections from the internal network
+sudo ufw allow from 192.168.1.0/24 to 192.168.1.0/24 port 22
+sudo ufw allow from 192.168.2.0/24 to 192.168.1.0/24 port 22
+
+# Does not start any new connections
+# TODO
