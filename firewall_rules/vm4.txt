@@ -2,6 +2,9 @@
 # In the bash shell
 sudo ufw enable
 
+# Allow connections from DMZ to Postgres
+sudo ufw allow from 192.168.1.0/24 to 192.168.2.0/24 port 5432
+
 # Accepts ssh requests
 sudo ufw allow from any to 192.168.2.0/24 port 22
 
