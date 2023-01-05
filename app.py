@@ -18,7 +18,13 @@ def create_appointment():
 
 @app.route("/read", methods=["GET"])
 def read_appointment():
-	pass
+	with psycopg2.connect("dbname=sirs user=velhinho") as conn, conn.cursor() as cur:
+		payload = request.get_json()
+		name = payload["name"]
+		cur.execute("SELECT * FROM appointments WHERE name = (%s)", [name])
+		values = cur.fetchall()
+		print(values)
+		return values
 
 @app.route("/update", methods=["PUT"])
 def update_appointment():
@@ -27,6 +33,16 @@ def update_appointment():
 @app.route("/delete", methods=["DELETE"])
 def delete_appointment():
 	pass
+
+@app.route("/test_results", methods=["GET"])
+def read_test_results():
+	with psycopg2.connect("dbname=sirs user=velhinho") as conn, conn.cursor() as cur:
+		payload = request.get_json()
+		name = payload["name"]
+		cur.execute("SELECT * FROM test_results WHERE name = (%s)", [name])
+		values = cur.fetchall()
+		print(values)
+		return values
 
 if __name__ == "__main__":
 	app.run()

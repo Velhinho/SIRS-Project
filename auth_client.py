@@ -22,14 +22,30 @@ def sign(data):
   signature_str = str(signature_b64, "utf-8")
   return signature_str
 
-def start_client():
+def send_message(results):
   with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
     asy_channel = AsymmetricChannel(s, pub, priv)
     secure_channel = SecureChannel(s, asy_channel)
     secure_channel.send_session_key()
-    results = ["Velhinho", 1, 1, 1, 1, 1, 1]
     print({"data": results, "signature": sign(results)})
     secure_channel.send({"data": results, "signature": sign(results)})
+    results = ["Velhinho", 1, 1, 1, 1, 1, 1]
 
-start_client()
+print('----------------------------------------------------------------------\n' \
+              '----------------------------------------------------------------------\n' \
+              '------------------------Saint Acutis Hospital-------------------------\n' \
+              '----------------------------------------------------------------------\n' \
+              'We provide 24H, 7 days a week Urgent Care-----------------------------\n' \
+              '----------------------------------------------------------------------\n')
+while True:
+  print("Enter pantient data")
+  results = [input("Name: "), 
+    input("Age:"), 
+    input("hemogblin:"),
+    input("red_blood_cell:"),
+    input("white_blood_cell:"),
+    input("platelets:"),
+    input("neutrophils:")]
+  send_message(results)
+  print()
