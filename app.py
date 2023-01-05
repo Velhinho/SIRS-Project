@@ -1,11 +1,27 @@
 from flask import Flask, request
+from sshtunnel import SSHTunnelForwarder
 import psycopg2
 
 app = Flask(__name__)
-creds = "dbname=sirs user=velhinho"
+username = "velhinho"
+dbname = "sirs"
+
+# ssh_tunnel = SSHTunnelForwarder(
+# 	"localhost",
+# 	ssh_username=username,
+# 	ssh_private_key="~/.ssh/id_rsa",
+# 	ssh_private_key_password= "~/.ssh/id_rsa.pub",
+# 	remote_bind_address=("localhost", 5432)
+# 	)
+# ssh_tunnel.start()
+
+def db_connect():
+#	return psycopg2.connect(host="localhost", port=ssh_tunnel.local_bind_port, user=username, database=dbname)
+	return psycopg2.connect(user=username, database=dbname)
+
 @app.route("/create", methods=["POST"])
 def create_appointment():
-	with psycopg2.connect(creds) as conn, conn.cursor() as cur:
+	with db_connect() as conn, conn.cursor() as cur:
 		payload = request.get_json()
 		name = payload["name"]
 		specialty = payload["specialty"]
@@ -18,7 +34,7 @@ def create_appointment():
 
 @app.route("/read", methods=["GET"])
 def read_appointment():
-	with psycopg2.connect(creds) as conn, conn.cursor() as cur:
+	with db_connect() as conn, conn.cursor() as cur:
 		payload = request.get_json()
 		name = payload["name"]
 		cur.execute("SELECT * FROM appointments WHERE name = (%s)", [name])
@@ -36,7 +52,7 @@ def delete_appointment():
 
 @app.route("/test_results", methods=["GET"])
 def read_test_results():
-	with psycopg2.connect(creds) as conn, conn.cursor() as cur:
+	with db_connect() as conn, conn.cursor() as cur:
 		payload = request.get_json()
 		name = payload["name"]
 		cur.execute("SELECT * FROM test_results WHERE name = (%s)", [name])

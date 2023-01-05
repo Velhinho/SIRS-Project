@@ -8,6 +8,7 @@ cryptography = "*"
 flask = "*"
 psycopg2-binary = "*"
 requests = "*"
+sshtunnel = "*"
 
 [dev-packages]
 
