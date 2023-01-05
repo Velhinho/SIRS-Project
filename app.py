@@ -2,10 +2,10 @@ from flask import Flask, request
 import psycopg2
 
 app = Flask(__name__)
-
+creds = "dbname=sirs user=velhinho"
 @app.route("/create", methods=["POST"])
 def create_appointment():
-	with psycopg2.connect("dbname=sirs user=velhinho") as conn, conn.cursor() as cur:
+	with psycopg2.connect(creds) as conn, conn.cursor() as cur:
 		payload = request.get_json()
 		name = payload["name"]
 		specialty = payload["specialty"]
@@ -18,7 +18,7 @@ def create_appointment():
 
 @app.route("/read", methods=["GET"])
 def read_appointment():
-	with psycopg2.connect("dbname=sirs user=velhinho") as conn, conn.cursor() as cur:
+	with psycopg2.connect(creds) as conn, conn.cursor() as cur:
 		payload = request.get_json()
 		name = payload["name"]
 		cur.execute("SELECT * FROM appointments WHERE name = (%s)", [name])
@@ -36,7 +36,7 @@ def delete_appointment():
 
 @app.route("/test_results", methods=["GET"])
 def read_test_results():
-	with psycopg2.connect("dbname=sirs user=velhinho") as conn, conn.cursor() as cur:
+	with psycopg2.connect(creds) as conn, conn.cursor() as cur:
 		payload = request.get_json()
 		name = payload["name"]
 		cur.execute("SELECT * FROM test_results WHERE name = (%s)", [name])
