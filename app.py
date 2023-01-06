@@ -6,6 +6,8 @@ app = Flask(__name__)
 username = "velhinho"
 dbname = "sirs"
 
+def db_connect():
+# We were unable to run sing SSH
 # ssh_tunnel = SSHTunnelForwarder(
 # 	"localhost",
 # 	ssh_username=username,
@@ -14,8 +16,6 @@ dbname = "sirs"
 # 	remote_bind_address=("localhost", 5432)
 # 	)
 # ssh_tunnel.start()
-
-def db_connect():
 #	return psycopg2.connect(host="localhost", port=ssh_tunnel.local_bind_port, user=username, database=dbname)
 	return psycopg2.connect(user=username, database=dbname)
 
