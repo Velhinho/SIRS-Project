@@ -15,7 +15,9 @@ HOST = "localhost"
 PORT = 8081
 key_file = sys.argv[1]
 cert_file = sys.argv[2]
-creds = "dbname=sirs user=velhinho"
+dbname = "sirs"
+user = "postgres"
+password = "postgres"
 
 with open(key_file, "rb") as key_f, open(cert_file, "rb") as cert_f:
   cert = x509.load_pem_x509_certificate(cert_f.read())
@@ -29,11 +31,11 @@ def verify(data, signature_str):
   acm.verify(pub, signature, bytes(json_string, "utf-8"))
 
 def send_to_db(data, signature_str):
-	with psycopg2.connect(creds) as conn, conn.cursor() as cur:
+	with psycopg2.connect(dbname=dbname, user=user, password=password, host=HOST) as conn, conn.cursor() as cur:
 	  cur.execute("INSERT INTO test_results VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", data + [signature_str])
 
 def show_table():
-  with psycopg2.connect(creds) as conn:
+  with psycopg2.connect(dbname=dbname, user=user, password=password, host=HOST) as conn:
     with conn.cursor() as cur:
       cur.execute("SELECT * FROM test_results")
       values = cur.fetchall()
@@ -43,7 +45,7 @@ def show_table():
       print(tabulate.tabulate(values, headers=["Name", "Age", "Hemogoblin", "Red Blood Cells", "White Blood Cells", "Platelets", "Neutrophils", "Signature"]))
 
 def test_authenticity():
-  with psycopg2.connect(creds) as conn:
+  with psycopg2.connect(dbname=dbname, user=user, password=password, host=HOST) as conn:
     with conn.cursor() as cur:
       cur.execute("SELECT * FROM test_results")
       values = cur.fetchall()

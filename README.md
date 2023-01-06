@@ -4,8 +4,18 @@
 * Ubuntu 20.04 LTS
 * Python 3.8
 * Pipenv version 2022.12.19
+* PostgreSQL 15.1 (Ubuntu 15.1-1.pgdg20.04+1)
 
 ## Running
+Change the password for the postgres user with `postgres`
+And create the databases and tables
+* `sudo -u postgres psql`
+* `\password postgres` use `postgres` as a password
+* `CREATE DATABASE sirs`
+* `\c sirs`
+* Copy and paste the tables in the `schema.sql`
+* Copy and paste the rows in the `populate.sql`
+
 Setup the libraries (these can be found in the Pipfile)
 * `pipenv sync` to install the libraries
 * `pipenv shell` to use the libraries

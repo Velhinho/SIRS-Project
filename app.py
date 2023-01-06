@@ -3,21 +3,22 @@ from sshtunnel import SSHTunnelForwarder
 import psycopg2
 
 app = Flask(__name__)
-username = "velhinho"
+username = "postgres"
+password = "postgres"
 dbname = "sirs"
 
 def db_connect():
-# We were unable to run sing SSH
-# ssh_tunnel = SSHTunnelForwarder(
-# 	"localhost",
-# 	ssh_username=username,
-# 	ssh_private_key="~/.ssh/id_rsa",
-# 	ssh_private_key_password= "~/.ssh/id_rsa.pub",
-# 	remote_bind_address=("localhost", 5432)
-# 	)
-# ssh_tunnel.start()
-#	return psycopg2.connect(host="localhost", port=ssh_tunnel.local_bind_port, user=username, database=dbname)
-	return psycopg2.connect(user=username, database=dbname)
+# We were unable to run using SSH
+	# ssh_tunnel = SSHTunnelForwarder(
+	# 	"localhost",
+	# 	ssh_username=username,
+	# 	ssh_pkey="hospital_key.pem",
+	# 	ssh_private_key_password= "~/.ssh/id_rsa.pub",
+	# 	remote_bind_address=("localhost", 5432)
+	# 	)
+	# ssh_tunnel.start()
+	# return psycopg2.connect(host="localhost", port=ssh_tunnel.local_bind_port, user=username, database=dbname)
+	return psycopg2.connect(user=username, password=password, database=dbname, host="localhost")
 
 @app.route("/create", methods=["POST"])
 def create_appointment():
