@@ -60,8 +60,8 @@ def start_server():
     s.bind((HOST, PORT))
     print("listening")
     s.listen()
-    conn, addr = s.accept()
     while True:
+      conn, addr = s.accept()
       with conn:
         print(f"Connected by {addr}")
         asy_channel = AsymmetricChannel(conn, pub, priv)
