@@ -36,7 +36,7 @@ class SecureChannel:
     nounce = json_channel.recv()
     print("Nounce: " + nounce)
     session_key = base64_encode_str(Fernet.generate_key())
-    print("Session Key: " + session_key)
+    print("Sending session key")
     json_channel.send([nounce, session_key])
     self.symmetric_channel = SymmetricChannel(socket=self.socket, key=base64.b64decode(session_key))
 
@@ -51,7 +51,7 @@ class SecureChannel:
     if recv_nounce != nounce:
       raise ValueError("Wrong nounce")
     print("Correct Nounce")
-    print("Session key:" + session_key)
+    print("Received session key:" + session_key)
     self.symmetric_channel = SymmetricChannel(socket=self.socket, key=base64.b64decode(session_key))
   
 def base64_encode_str(data):
