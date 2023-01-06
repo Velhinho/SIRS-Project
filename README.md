@@ -6,7 +6,7 @@
 * Pipenv version 2022.12.19
 
 ## Running
-Setup the libraries
+Setup the libraries (these can be found in the Pipfile)
 * `pipenv sync` to install the libraries
 * `pipenv shell` to use the libraries
 
