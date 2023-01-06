@@ -35,10 +35,11 @@ class SecureChannel:
     json_channel.send("Lab")
     nounce = json_channel.recv()
     print("Nounce: " + nounce)
-    session_key = base64_encode_str(Fernet.generate_key())
+    key = os.urandom(32)
+    session_key_str = base64_encode_str(key)
     print("Sending session key")
-    json_channel.send([nounce, session_key])
-    self.symmetric_channel = SymmetricChannel(socket=self.socket, key=base64.b64decode(session_key))
+    json_channel.send([nounce, session_key_str])
+    self.symmetric_channel = SymmetricChannel(socket=self.socket, key=key)
 
   def recv_session_key(self):
     json_channel = JsonChannel(self.asymmetric_channel)
