@@ -1,1 +1,1 @@
-flask run --cert=server_cert.pem --key=server_key.pem
+flask run --cert=hospital_cert.pem --key=hospital_key.pem

@@ -1,1 +1,1 @@
-python3 auth_server.py server_key.pem lab_cert.pem
+python3 auth_server.py hospital_key.pem lab_cert.pem
