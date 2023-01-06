@@ -50,6 +50,7 @@ class SecureChannel:
     recv_nounce, session_key = json_channel.recv()
     if recv_nounce != nounce:
       raise ValueError("Wrong nounce")
+    print("Correct Nounce")
     print("Session key:" + session_key)
     self.symmetric_channel = SymmetricChannel(socket=self.socket, key=base64.b64decode(session_key))
   

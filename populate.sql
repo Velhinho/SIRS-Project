@@ -10,7 +10,7 @@ INSERT INTO appointments (name, specialty, doctor, starting_time) VALUES
     ('Ivy', 'Endocrinology', 'Dr. Taylor', '2022-01-09 17:00:00'),
     ('Jack', 'Pulmonology', 'Dr. Jackson', '2022-01-10 18:00:00');
 
-INSERT INTO test_results (name, age, hemoglobin, red_blood_cell, white_blood_cell, platelets, neutrophils) VALUES
+/* INSERT INTO test_results (name, age, hemoglobin, red_blood_cell, white_blood_cell, platelets, neutrophils) VALUES
     ('Alice', 35, 15.2, 4.5, 7.8, 250, 72),
     ('Bob', 40, 13.7, 4.2, 8.1, 280, 67),
     ('Charlie', 45, 12.9, 4.0, 7.6, 300, 64),
@@ -21,3 +21,4 @@ INSERT INTO test_results (name, age, hemoglobin, red_blood_cell, white_blood_cel
     ('Henry', 70, 7.4, 3.1, 5.6, 400, 49),
     ('Ivy', 75, 6.3, 2.9, 5.2, 420, 46),
     ('Jack', 80, 5.2, 2.7, 4.8, 440, 43);
+ */

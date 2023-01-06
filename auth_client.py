@@ -6,7 +6,7 @@ from asymmetric_channel import AsymmetricChannel
 from secure_channel import SecureChannel
 
 HOST = "localhost"
-PORT = 8080
+PORT = 8081
 key_file = sys.argv[1]
 cert_file = sys.argv[2]
 

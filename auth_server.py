@@ -1,4 +1,4 @@
-import socket, sys, json, base64, psycopg2
+import socket, sys, json, base64, psycopg2, tabulate
 import asymmetric_channel as acm
 from cryptography.hazmat.primitives import serialization
 from cryptography import x509
@@ -12,7 +12,7 @@ from secure_channel import SecureChannel
 # A and B communicate using session key and TCP
 
 HOST = "localhost"
-PORT = 8080
+PORT = 8081
 key_file = sys.argv[1]
 cert_file = sys.argv[2]
 creds = "dbname=sirs user=velhinho"
@@ -30,7 +30,17 @@ def verify(data, signature_str):
 
 def send_to_db(data, signature_str):
 	with psycopg2.connect(creds) as conn, conn.cursor() as cur:
-		cur.execute("INSERT INTO test_results VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", data + [signature_str])
+	  cur.execute("INSERT INTO test_results VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", data + [signature_str])
+
+def show_table():
+  with psycopg2.connect(creds) as conn:
+    with conn.cursor() as cur:
+      cur.execute("SELECT * FROM test_results")
+      values = cur.fetchall()
+      values = [list(value) for value in values]
+      for value in values:
+        value[len(value) - 1] = value[len(value) - 1][0:10] + "..."
+      print(tabulate.tabulate(values, headers=["Name", "Age", "Hemogoblin", "Red Blood Cells", "White Blood Cells", "Platelets", "Neutrophils", "Signature"]))
 
 def start_server():
   with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -47,6 +57,6 @@ def start_server():
       print(msg)
       verify(msg["data"], msg["signature"])
       send_to_db(msg["data"], msg["signature"])
-
+      show_table()
 
 start_server()
